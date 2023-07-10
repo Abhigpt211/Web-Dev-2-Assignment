@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.error {
+  color: red;
+}
+
+input:invalid,
+select:invalid {
+  border: 1px solid red;
+}
+</style>
+</head>
+<body>
+  <form id="myForm">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+    </div>
+    <div>
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+    </div>
+    <div>
+      <label for="age">Age:</label>
+      <input type="number" id="age" required>
+    </div>
+    <div>
+      <label for="gender">Gender:</label>
+      <select id="gender" required>
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+    <div>
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" required>
+    </div>
+    <div>
+      <label for="color">Favorite Color:</label>
+      <input type="color" id="color" required>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+
+  <script>
+    const form = document.getElementById('myForm');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const phoneInput = document.getElementById('phone');
+const passwordInput = document.getElementById('password');
+const ageInput = document.getElementById('age');
+const genderInput = document.getElementById('gender');
+const dobInput = document.getElementById('dob');
+const colorInput = document.getElementById('color');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  if (!validateForm()) {
+    return;
+  }
+
+  // Perform further actions or submit the form
+  console.log('Form submitted successfully');
+});
+
+function validateForm() {
+  let isValid = true;
+
+  if (nameInput.value.trim() === '') {
+    setInvalid(nameInput, 'Please enter your name');
+    isValid = false;
+  } else {
+    setValid(nameInput);
+  }
+
+  if (!validateEmail(emailInput.value)) {
+    setInvalid(emailInput, 'Please enter a valid email address');
+    isValid = false;
+  } else {
+    setValid(emailInput);
+  }
+
+  if (!validatePhoneNumber(phoneInput.value)) {
+    setInvalid(phoneInput, 'Please enter a valid phone number');
+    isValid = false;
+  } else {
+    setValid(phoneInput);
+  }
+
+  if (passwordInput.value.length < 8) {
+    setInvalid(passwordInput, 'Password must be at least 8 characters');
+    isValid = false;
+  } else {
+    setValid(passwordInput);
+  }
+
+  if (ageInput.value < 18 || ageInput.value > 120) {
+    setInvalid(ageInput, 'Please enter a valid age (between 18 and 120)');
+    isValid = false;
+  } else {
+    setValid(ageInput);
+  }
+
+  if (genderInput.value === '') {
+    setInvalid(genderInput, 'Please select a gender');
+    isValid = false;
+  } else {
+    setValid(genderInput);
+  }
+
+  if (!validateDateOfBirth(dobInput.value)) {
+    setInvalid(dobInput, 'Please enter a valid date of birth');
+    isValid = false;
+  } else {
+    setValid(dobInput);
+  }
+
+  if (colorInput.value === '#000000') {
+    setInvalid(colorInput, 'Please select a color');
+    isValid = false;
+  } else {
+    setValid(colorInput);
+  }
+
+  return isValid;
+}
+
+function validateEmail(email) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
+function validatePhoneNumber(phoneNumber) {
+  const phonePattern = /^\d{10}$/;
+  return phonePattern.test(phoneNumber);
+}
+
+function validateDateOfBirth(date) {
+  const currentDate = new Date();
+  const selectedDate = new Date(date);
+  return selectedDate <= currentDate;
+}
+
+function setInvalid(input, errorMessage) {
+  input.classList.add('error');
+  input.setCustomValidity(errorMessage);
+}
+
+function setValid(input) {
+  input.classList.remove('error');
+  input.setCustomValidity('');
+}
+  </script>
+</body>
+</html>
