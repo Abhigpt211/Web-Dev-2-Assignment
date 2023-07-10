@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Box</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="inputBox" placeholder="Type something">
+        <button id="submitButton">Submit</button>
+    </div>
+    <ul id="list"></ul>
+    <script>
+        const inputBox = document.getElementById("inputBox")
+        const submitButton = document.getElementById("submitButton")
+        const list = document.getElementById("list")
+
+        submitButton.addEventListener('click', function(){
+            const userInput = inputBox.value ;
+
+            if(userInput){
+                const listItem = document.createElement('li')
+                listItem.textContent = userInput
+                list.appendChild(listItem)
+                inputBox.value = ''
+                
+            }
+        })
+    </script>
+</body>
+</html>
